@@ -1,4 +1,6 @@
 streamlit==0.61.0
 numpy==1.18.1
-http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
+--find-links https://download.pytorch.org/whl/torch_stable.html
+
+torch==1.7.0+cpu
 pillow==6.2.0
