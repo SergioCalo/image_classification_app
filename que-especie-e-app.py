@@ -20,7 +20,7 @@ def import_and_predict(image_data, model):
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
-    size = (300,300)    
+    size = (600,600)    
     image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
 
     image = image.convert('RGB')
@@ -66,9 +66,9 @@ else:
       st.text("")
       st.text('Outras posibilidades:')
       st.text("")
-      line1 = str(clases[int(res.indices[0][1])]) + ', probabilidade: ' + str(float(res.values[0][1]*100)) + '%'
-      line2 = str(clases[int(res.indices[0][2])]) + ', probabilidade: ' +  str(float(res.values[0][2]*100)) + '%'
-      line3 = str(clases[int(res.indices[0][3])]) + ', probabilidade: ' + str(float(res.values[0][3]*100)) + '%'
+      line1 = str(clases[int(res.indices[0][1])]) + ', probabilidade: ' + str(round(float(res.values[0][1]*100)),2) + '%'
+      line2 = str(clases[int(res.indices[0][2])]) + ', probabilidade: ' +  str(round(float(res.values[0][2]*100)),2) + '%'
+      line3 = str(clases[int(res.indices[0][3])]) + ', probabilidade: ' + str(round(float(res.values[0][3]*100)),2) + '%'
       st.text(line1)
       st.text(line2)
       st.text(line3)
