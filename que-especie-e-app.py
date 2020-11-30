@@ -34,7 +34,7 @@ def import_and_predict(image_data, model):
   
     return output
 
-model = torch.load('ResNet50_corrubedo.h5', , map_location=torch.device('cpu'))
+model = torch.load('ResNet50_corrubedo.h5' , map_location=torch.device('cpu'))
 
 st.write("""
          # Queres saber de que especie se trata?
