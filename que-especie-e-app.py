@@ -66,9 +66,12 @@ else:
       st.text("")
       st.text('Outras posibilidades:')
       st.text("")
-      st.text(clases[int(res.indices[0][1])], ', probabilidade:', float(res.values[0][1]*100), '%')
-      st.text(clases[int(res.indices[0][2])], ', probabilidade:', float(res.values[0][2]*100), '%')
-      st.text(clases[int(res.indices[0][3])], ', probabilidade:', float(res.values[0][3]*100), '%')
+      line1 = str(clases[int(res.indices[0][1])]) + ', probabilidade: ' + str(float(res.values[0][1]*100)) + '%'
+      line2 = str(clases[int(res.indices[0][2])]) + ', probabilidade: ' +  str(float(res.values[0][2]*100)) + '%'
+      line3 = str(clases[int(res.indices[0][3])]) + ', probabilidade: ' + str(float(res.values[0][3]*100)) + '%'
+      st.text(line1)
+      st.text(line2)
+      st.text(line3)
       st.text("")
     else:
       st.text('Non estou seguro, poderías ensinarme outra foto do organismo?')
