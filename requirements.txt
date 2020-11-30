@@ -1,4 +1,4 @@
 streamlit==0.61.0
 numpy==1.18.1
-pytorch-cpu==1.7.0
+torch==1.7.0+cpu
 pillow==6.2.0
