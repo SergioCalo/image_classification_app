@@ -29,12 +29,15 @@ def import_and_predict(image_data, model):
     image = image.permute(0,1,2,3)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    clases = ['Alytes obstetricans', 'Anguis fragilis', 'Chalcides striatus', 'Chioglossa lusitanica', 'Coronella austriaca', 'Coronella girondica', 'Discoglossus galganoi', 'Emys orbicularis', 'Epidalea calamita', 'Hyla arborea', 'Lacerta schreiberi', 'Lacerta viridis', 'Lissotriton boscai', 'Natrix astreptophora', 'Natrix maura', 'Pelobates cultripes', 'Pelophylax perezi', 'Podarcis bocagei', 'Podarcis hispanicus', 'Rana iberica', 'Salamandra salamandra', 'Timon lepidus', 'Triturus marmoratus', 'Vipera seoanei', 'Zamenis scalaris']
     
     output = model(image)
   
     return output
 
+clases = ['Alytes obstetricans', 'Anguis fragilis', 'Chalcides striatus', 'Chioglossa lusitanica', 'Coronella austriaca', 'Coronella girondica', 'Discoglossus galganoi',
+              'Emys orbicularis', 'Epidalea calamita', 'Hyla arborea', 'Lacerta schreiberi', 'Lacerta viridis', 'Lissotriton boscai', 'Natrix astreptophora', 'Natrix maura',
+              'Pelobates cultripes', 'Pelophylax perezi', 'Podarcis bocagei', 'Podarcis hispanicus', 'Rana iberica', 'Salamandra salamandra', 'Timon lepidus', 
+              'Triturus marmoratus', 'Vipera seoanei', 'Zamenis scalaris']
 model = torch.load('ResNet50_corrubedo.h5', map_location=lambda storage, loc: storage)
 
 st.write("""
