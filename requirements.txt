@@ -1,4 +1,4 @@
 streamlit==0.61.0
 numpy==1.18.1
-torch==1.7.0+cpu
+http://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
 pillow==6.2.0
