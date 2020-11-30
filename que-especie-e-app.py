@@ -66,9 +66,9 @@ else:
       st.text("")
       st.text('Outras posibilidades:')
       st.text("")
-      line1 = str(clases[int(res.indices[0][1])]) + ', probabilidade: ' + str(round(float(res.values[0][1]*100)),2) + '%'
-      line2 = str(clases[int(res.indices[0][2])]) + ', probabilidade: ' +  str(round(float(res.values[0][2]*100)),2) + '%'
-      line3 = str(clases[int(res.indices[0][3])]) + ', probabilidade: ' + str(round(float(res.values[0][3]*100)),2) + '%'
+      line1 = str(clases[int(res.indices[0][1])]) + ', probabilidade: ' + str(round(float(res.values[0][1]*100),2)) + '%'
+      line2 = str(clases[int(res.indices[0][2])]) + ', probabilidade: ' +  str(round(float(res.values[0][2]*100),2)) + '%'
+      line3 = str(clases[int(res.indices[0][3])]) + ', probabilidade: ' + str(round(float(res.values[0][3]*100),2)) + '%'
       st.text(line1)
       st.text(line2)
       st.text(line3)
