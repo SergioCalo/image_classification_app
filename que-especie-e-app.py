@@ -7,24 +7,34 @@ Created on Fri Jun 26 00:40:50 2020
 
 import numpy as np
 import streamlit as st
-import tensorflow as tf
+import torch
 from PIL import Image, ImageOps
 
 def import_and_predict(image_data, model):
+
+    transformar = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+
+    size = (300,300)    
+    image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
+
+    image = image.convert('RGB')
+    image = transformar(image)
+    image = image.unsqueeze(0)
+    image = image.permute(0,1,2,3)
+
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    clases = ['Alytes obstetricans', 'Anguis fragilis', 'Chalcides striatus', 'Chioglossa lusitanica', 'Coronella austriaca', 'Coronella girondica', 'Discoglossus galganoi', 'Emys orbicularis', 'Epidalea calamita', 'Hyla arborea', 'Lacerta schreiberi', 'Lacerta viridis', 'Lissotriton boscai', 'Natrix astreptophora', 'Natrix maura', 'Pelobates cultripes', 'Pelophylax perezi', 'Podarcis bocagei', 'Podarcis hispanicus', 'Rana iberica', 'Salamandra salamandra', 'Timon lepidus', 'Triturus marmoratus', 'Vipera seoanei', 'Zamenis scalaris']
     
-        size = (75,75)    
-        image = ImageOps.fit(image_data, size, Image.ANTIALIAS)
-        image = image.convert('RGB')
-        image = np.asarray(image)
-        image = (image.astype(np.float32) / 255.0)
+    output = model(image)
+  
+    return output
 
-        img_reshape = image[np.newaxis,...]
-
-        prediction = model.predict(img_reshape)
-        
-        return prediction
-
-model = tf.keras.models.load_model('my_model.h5')
+model = torch.load('ResNet50_corrubedo.h5', , map_location=torch.device('cpu'))
 
 st.write("""
          # Queres saber de que especie se trata?
@@ -41,13 +51,21 @@ else:
     image = Image.open(file)
     st.image(image, use_column_width=True)
     prediction = import_and_predict(image, model)
-    
-    if np.argmax(prediction) == 0:
-        st.write("Canis lupus")
-    elif np.argmax(prediction) == 1:
-        st.write("Canis lupus")
+    sm = torch.nn.Softmax()
+    probabilities = sm(output) 
+    prob, prob2=torch.max(probabilities, 1)
+    prob=100.*(prob.item())
+    prob=round(prob, 2)
+    res = torch.topk(probabilities, 4)
+    if prob > 70:
+      st.write(clases[int(res.indices[0][0])], ', probabilidade:', prob, '%')
+      st.text("")
+      st.text('Outras posibilidades:')
+      st.text("")
+      st.text(clases[int(res.indices[0][1])], ', probabilidade:', float(res.values[0][1]*100), '%')
+      st.text(clases[int(res.indices[0][2])], ', probabilidade:', float(res.values[0][2]*100), '%')
+      st.text(clases[int(res.indices[0][3])], ', probabilidade:', float(res.values[0][3]*100), '%')
+      st.text("")
     else:
-        st.write("Canis lupus")
-    
-    st.text("Probability (0: Canis lupus, 1: Canis lupus, 2: Canis lupus)")
-    st.write(prediction)
+      st.text('Non estou seguro, poderías ensinarme outra foto do organismo?')
+      st.text('consello: quizais sexa boa idea buscar un ángulo diferente')
